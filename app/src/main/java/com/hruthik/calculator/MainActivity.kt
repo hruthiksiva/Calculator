@@ -112,8 +112,11 @@ class MainActivity : AppCompatActivity() {
             result.text = ""
         }
         equals.setOnClickListener {
-            if(countsign==0) {
+            if(countsign==0 && expression.text.toString()!="") {
                 val texts = expression.text.toString()
+                if(texts.takeLast(1)=="*"||texts.takeLast(1)=="/"||texts.takeLast(1)=="+"||texts.takeLast(1)=="-"||texts.takeLast(1)==".")
+                   expression.text.dropLast(1)
+
                 val expressions = ExpressionBuilder(texts).build()
                 val results = expressions.evaluate()
                 val longResult = results.toLong()
@@ -126,9 +129,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         delete.setOnClickListener {
-            val text = expression.text.toString()
-            if (text.isNotEmpty()) {
-                expression.text = text.drop(-1)
+            val texts = expression.text.toString()
+            if (texts.isNotEmpty()) {
+                expression.text = texts.dropLast(1)
+               // if(expression.text.toString().takeLast(1)=="*"||expression.text.takeLast(1)=="/"||expression.text.takeLast(1)=="+"||expression.text.takeLast(1)=="-"||expression.text.takeLast(1)==".")
+                 //   expression.text.dropLast(1)
+
             }
 
             result.text = ""
