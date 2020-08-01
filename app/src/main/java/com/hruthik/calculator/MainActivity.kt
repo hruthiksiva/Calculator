@@ -1,5 +1,6 @@
 package com.hruthik.calculator
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -7,6 +8,7 @@ import net.objecthunter.exp4j.ExpressionBuilder
 
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -112,19 +114,26 @@ class MainActivity : AppCompatActivity() {
             result.text = ""
         }
         equals.setOnClickListener {
-            if(countsign==0 && expression.text.toString()!="") {
-                val texts = expression.text.toString()
-                if(texts.takeLast(1)=="*"||texts.takeLast(1)=="/"||texts.takeLast(1)=="+"||texts.takeLast(1)=="-"||texts.takeLast(1)==".")
-                   expression.text.dropLast(1)
+            try {
 
-                val expressions = ExpressionBuilder(texts).build()
-                val results = expressions.evaluate()
-                val longResult = results.toLong()
-                if (results == longResult.toDouble()) {
-                    result.text = longResult.toString()
-                } else {
-                    result.text = results.toString()
+                if (countsign == 0 && expression.text.toString() != "") {
+                    val texts = expression.text.toString()
+                    // if(texts.takeLast(1)=="*"||texts.takeLast(1)=="/"||texts.takeLast(1)=="+"||texts.takeLast(1)=="-"||texts.takeLast(1)==".")
+                    //    expression.text.dropLast(1)
+
+                    val expressions = ExpressionBuilder(texts).build()
+                    val results = expressions.evaluate()
+                    val longResult = results.toLong()
+                    if (results == longResult.toDouble()) {
+                        result.text = longResult.toString()
+                    } else {
+                        result.text = results.toString()
+                    }
                 }
+            }
+            catch (e: Exception)
+            {
+                result.text="Invalid"
             }
         }
 
@@ -132,8 +141,8 @@ class MainActivity : AppCompatActivity() {
             val texts = expression.text.toString()
             if (texts.isNotEmpty()) {
                 expression.text = texts.dropLast(1)
-               // if(expression.text.toString().takeLast(1)=="*"||expression.text.takeLast(1)=="/"||expression.text.takeLast(1)=="+"||expression.text.takeLast(1)=="-"||expression.text.takeLast(1)==".")
-                 //   expression.text.dropLast(1)
+                if(texts.last().toString()=="*"||texts.takeLast(1)=="/"||texts.takeLast(1)=="+"||texts.takeLast(1)=="-"||texts.takeLast(1)==".")
+                    expression.text.dropLast(1)
 
             }
 
