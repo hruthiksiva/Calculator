@@ -10,66 +10,101 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var countsign: Int = 0
+        var dotcount: Int = 0
+        var dividesign: Int = 0
         /*Number Buttons*/
         one.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("1", clear = true)
         }
 
         two.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("2", clear = true)
         }
 
         three.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("3", clear = true)
         }
         four.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("4", clear = true)
         }
 
         five.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("5", clear = true)
         }
 
         six.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("6", clear = true)
         }
 
         seven.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("7", clear = true)
         }
 
         eight.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("8", clear = true)
         }
 
         nine.setOnClickListener {
+            countsign = 0
+            dividesign = 0
             evaluateExpression("9", clear = true)
         }
 
         zero.setOnClickListener {
-            evaluateExpression("0", clear = true)
+            countsign = 0
+            if(dividesign==0)
+                 evaluateExpression("0", clear = true)
         }
 
         /* Operators*/
 
         add.setOnClickListener {
-            evaluateExpression("+", clear = true)
+            countsign++
+            if (countsign == 1)
+                evaluateExpression("+", clear = true)
         }
 
         minus.setOnClickListener {
-            evaluateExpression("-", clear = true)
+            countsign++
+            if (countsign == 1)
+                evaluateExpression("-", clear = true)
         }
 
         multiply.setOnClickListener {
-            evaluateExpression("*", clear = true)
+            countsign++
+            if (countsign == 1)
+                evaluateExpression("*", clear = true)
         }
 
         divide.setOnClickListener {
-            evaluateExpression("/", clear = true)
+            countsign++
+            dividesign++
+            if (countsign == 1)
+                evaluateExpression("/", clear = true)
         }
 
         dot.setOnClickListener {
-            evaluateExpression(".", clear = true)
+            countsign++
+            dotcount++
+            if (countsign == 1 && dotcount==1)
+                evaluateExpression(".", clear = true)
         }
 
         clear.setOnClickListener {
@@ -77,22 +112,23 @@ class MainActivity : AppCompatActivity() {
             result.text = ""
         }
         equals.setOnClickListener {
-            val text = expression.text.toString()
-            val expression = ExpressionBuilder(text).build()
-
-            val results = expression.evaluate()
-            val longResult = results.toLong()
-            if (results == longResult.toDouble()) {
-                result.text = longResult.toString()
-            } else {
-                result.text = result.toString()
+            if(countsign==0) {
+                val texts = expression.text.toString()
+                val expressions = ExpressionBuilder(texts).build()
+                val results = expressions.evaluate()
+                val longResult = results.toLong()
+                if (results == longResult.toDouble()) {
+                    result.text = longResult.toString()
+                } else {
+                    result.text = results.toString()
+                }
             }
         }
 
         delete.setOnClickListener {
             val text = expression.text.toString()
-            if(text.isNotEmpty()) {
-                expression.text = text.drop(1)
+            if (text.isNotEmpty()) {
+                expression.text = text.drop(-1)
             }
 
             result.text = ""
@@ -102,7 +138,7 @@ class MainActivity : AppCompatActivity() {
     /*Function to calculate the expressions using expression builder library*/
 
     fun evaluateExpression(string: String, clear: Boolean) {
-        if(clear) {
+        if (clear) {
             result.text = ""
             expression.append(string)
         } else {
@@ -111,5 +147,4 @@ class MainActivity : AppCompatActivity() {
             result.text = ""
         }
     }
-
-    }
+}
