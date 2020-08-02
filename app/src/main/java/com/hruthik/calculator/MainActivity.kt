@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         result.text = results.toString()
                     }
+                    expression.text=result.text.toString()
                 }
             }
             catch (e: Exception)
