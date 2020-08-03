@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Vibrator
+import android.text.method.ScrollingMovementMethod
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import net.objecthunter.exp4j.ExpressionBuilder
@@ -18,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         var countsign: Int = 0
         var dotcount: Int = 0
         var dividesign: Int = 0
+        expression.movementMethod = ScrollingMovementMethod()
+        result.movementMethod = ScrollingMovementMethod()
 
         /*Number Buttons*/
         one.setOnClickListener {
